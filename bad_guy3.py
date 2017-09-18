@@ -27,3 +27,17 @@ class Bad_guy3(Sprite):
 		# self.rect.left = self.x
 		# self.rect.top = self.y
 		self.screen.blit(self.image,[self.x,self.y])
+
+	
+	def reset(self):
+		self.x = 100
+		self.y = randint(20,780)
+		self.speed += .5
+
+		
+
+
+		
+		
+		
+

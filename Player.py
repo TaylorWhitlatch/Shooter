@@ -10,22 +10,27 @@ class Player(Sprite):
 		super(Player,self).__init__()
 		self.image = pygame.image.load(image)
 		self.image = pygame.transform.scale(self.image,(100,100))
-		self.x = 600
-		self.y = 700
+		self.x = 300						
+		self.y = 500
 		self.speed = 10
 		self.screen = screen
 		self.should_move_up = False
 		self.should_move_down = False
 		self.should_move_left = False
 		self.should_move_right = False
+
 	# 2. The methods where you define all the class functions (methods)
 
 	def draw_me(self):
 		if(self.should_move_up):
-			self.y -= self.speed
+			if self.y > 100:
+
+				self.y -= self.speed
 			
+				
 		elif(self.should_move_down):
-			self.y += self.speed
+			if self.y < 700:
+				self.y += self.speed
 		if(self.should_move_left):
 			self.x -= self.speed
 		elif(self.should_move_right):
