@@ -9,21 +9,22 @@ class Player(Sprite):
 	def __init__(self,image,start_x,start_y,screen):
 		super(Player,self).__init__()
 		self.image = pygame.image.load(image)
-		self.image = pygame.transform.scale(self.image,(100,100))
-		self.x = 300						
-		self.y = 500
+		self.image = pygame.transform.scale(self.image,(125,125))
+		self.x = 400						
+		self.y = 700
 		self.speed = 10
 		self.screen = screen
 		self.should_move_up = False
 		self.should_move_down = False
 		self.should_move_left = False
 		self.should_move_right = False
+		self.rect = self.image.get_rect()
 
 	# 2. The methods where you define all the class functions (methods)
 
 	def draw_me(self):
 		if(self.should_move_up):
-			if self.y > 100:
+			if self.y > 600:
 
 				self.y -= self.speed
 			
@@ -31,10 +32,15 @@ class Player(Sprite):
 		elif(self.should_move_down):
 			if self.y < 700:
 				self.y += self.speed
+
 		if(self.should_move_left):
-			self.x -= self.speed
+			if self.x > 20:
+				self.x -= self.speed
+				self.image = pygame.image.load("batman_r.png")
 		elif(self.should_move_right):
-			self.x += self.speed
+			if self.x < 1180:
+				self.x += self.speed
+				self.image = pygame.image.load("batman_l.png")
 		self.screen.blit(self.image, [self.x,self.y])
 
 	def should_move(self,direction,yes_or_no):

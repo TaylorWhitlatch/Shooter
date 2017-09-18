@@ -3,7 +3,8 @@
 # $ pip install pygame
 # it is NOT part of core. This is a 3rd party module.
 import pygame
-from pygame.sprite import Group, groupcollide
+from pygame.sprite import Group, groupcollide, spritecollide, spritecollideany
+
 import math
 # -----CUSTOM CLASSES HERE-----
 from Player import Player
@@ -12,7 +13,8 @@ from Bullet import Bullet
 from monster1 import Monster
 from bad_guy2 import Bad_guy2
 from bad_guy3 import Bad_guy3
-background = pygame.image.load('background2.jpg')
+background = pygame.image.load('background2.png')
+
 # Have to init the pygame object so we can use it
 pygame.init()
 screen_size = (1200,800)
@@ -26,7 +28,7 @@ background_color = (82,111,53)
 screen = pygame.display.set_mode(screen_size)
 pygame.display.set_caption("An epic shooter made with python")
 
-the_player = Player('batman_r.png',100,100,screen)
+the_player = Player('batman_l.png',200,200,screen)
 # Make a bad_guy
 bad_guy = Bad_guy(screen)
 bad_guy2 =Bad_guy2(screen)
@@ -46,6 +48,8 @@ bad_guy3_g = Group()
 bad_guy3_g.add(bad_guy3)
 monster_g = Group()
 monster_g.add(monster)
+player = Group()
+player.add(the_player)
 # bad_guys.add(monster)
 # Make a new Group called bullets. Group is a pygame "list"
 # the_player = Group()
@@ -53,7 +57,7 @@ bullets = Group()
 the_player_group = Group()
 the_player_group.add(the_player)
 bg = 0
-
+hit = 0
 # the_player_image = pygame.image.load('batman.png')
 # player = {
 # 	"x": 100,
@@ -88,13 +92,17 @@ while game_on: #will run forever (until break)
 				# the_player.x -= the_player.speed
 				# the_player = Player('batman_l.png',100,100,screen)
 				the_player.should_move("left",True)
+				
 
-			elif event.key == 120:
-				# 32 = SPACE BAR... FIRE!!!!
-				new_bullet = Bullet(screen, the_player, 2	)
-				bullets.add(new_bullet)
-			elif event.key == 122:	
-				new_bullet = Bullet(screen, the_player, 3)
+			# elif event.key == 115:
+			# 	# 32 = SPACE BAR... FIRE!!!!
+			# 	new_bullet = Bullet(screen, the_player, 2	)
+			# 	bullets.add(new_bullet)
+			# elif event.key == 102:	
+			# 	new_bullet = Bullet(screen, the_player, 3)
+				
+			elif event.key == 32:	
+				new_bullet = Bullet(screen, the_player, 1)
 				bullets.add(new_bullet)
 			# elif event.key == 113:	
 			# 	new_bullet = Bullet(screen, the_player, 4)
@@ -102,14 +110,14 @@ while game_on: #will run forever (until break)
 		elif event.type == pygame.KEYUP:
 			if event.key == 273:
 				the_player.should_move("up",False)
-				the_player.should_move("down", True)
-				the_player.should_move("down", False)
+			
 			elif event.key == 274: 
 				the_player.should_move("down",False)
 			if event.key == 275:
 				the_player.should_move("right",False)
 			elif event.key == 276:
 				the_player.should_move("left",False)
+				
 
 	# print bullets
 
@@ -159,25 +167,32 @@ while game_on: #will run forever (until break)
 	bullet_hit = groupcollide(bullets,bad_guy_g,True,True)
 	bullet_hit = groupcollide(bullets,bad_guy3_g,True,True)
 	bullet_hit = groupcollide(bullets,monster_g,True,True)
+	enemy_hit = groupcollide(player,bad_guy_g,True, True)
+	# print the_player_group
+	# print bad_guy2_g
+	print player
+	print monster_g
 	
 	if len(bad_guy_g) == 0:
 		bad_guy.reset()
 		bad_guy_g.add(bad_guy)
 
+		hit += 1
+
 	if len(bad_guy2_g) == 0:
 		bad_guy2.reset()
 		bad_guy2_g.add(bad_guy2)
-
+		hit += 1
 	if len(bad_guy3_g) == 0:
 		bad_guy3.reset()
 		bad_guy3_g.add(bad_guy3)
-
+		hit += 1
 	if len(monster_g) == 0:
 		monster.reset()
 		monster_g.add(monster)
 		# bad_guy.reset
 		# bad_guys.add(bad_guy)
-		
+		hit += 1
 
 	# if bullet_hit == True:
 	# 	bad_guys.add(bad_guy)
@@ -187,5 +202,9 @@ while game_on: #will run forever (until break)
 	# print bullet_hit
 
 	# flip the screen, i.e.clear it so we can draw again... and again... and again
+	font = pygame.font.Font(None, 32)
+	wins_text = font.render("Hits: %d" % (hit), True, (0,0,0))
+	pygame_screen.blit(wins_text,[40,40])
+	print hit
 	pygame.display.flip()
 

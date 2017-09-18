@@ -7,8 +7,8 @@ class Monster(Sprite):
 	def __init__(self,screen):
 		super(Monster,self).__init__()
 		self.image = pygame.image.load('monster.png')
-		self.x = 1000
-		self.y = randint(100,700)
+		self.x = randint(20,200)
+		self.y = 50
 		self.screen = screen
 		self.speed = 1
 		self.rect = self.image.get_rect()
@@ -31,7 +31,22 @@ class Monster(Sprite):
 
 
 	def reset(self):
-		self.x = 1000
-		self.y = randint(20,780)
+		self.x = randint(20,1050)
+		self.y = 50
 		self.speed += .5
-
+		num = randint(1,7)
+		if num == 1:
+			self.image = pygame.image.load("monster.png")
+		if num == 2:
+			self.image = pygame.image.load("bad_guy.png")
+		if num == 3:
+			self.image = pygame.image.load("bad_guy2.png")
+		if num == 4:
+			self.image = pygame.image.load("bg3.png")
+		if num == 5:
+			self.image = pygame.image.load("bg4.png")
+		if num == 6:
+			self.image = pygame.image.load("bg5.png")
+		if num == 7:
+			self.image = pygame.image.load("bg6.png")
+		

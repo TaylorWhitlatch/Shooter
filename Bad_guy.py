@@ -6,8 +6,8 @@ class Bad_guy(Sprite):
 	def __init__(self,screen):
 		super(Bad_guy,self).__init__()
 		self.image = pygame.image.load('bad_guy.png')
-		self.x = 20
-		self.y = randint(20, 780)
+		self.x = randint(201,400)
+		self.y = 50
 		self.screen = screen
 		self.speed = 1
 		self.rect = self.image.get_rect()
@@ -30,7 +30,27 @@ class Bad_guy(Sprite):
 
 
 	def reset(self):
-		self.x = 100
-		self.y = randint(20,780)
+		self.x = randint(20,1150)
+		self.y = 50
 		self.speed += .5
+		num = randint(1,7)
+		if num == 1:
+			self.image = pygame.image.load("monster.png")
+		if num == 2:
+			self.image = pygame.image.load("bad_guy.png")
+		if num == 3:
+			self.image = pygame.image.load("bad_guy2.png")
+		if num == 4:
+			self.image = pygame.image.load("bg3.png")
+		if num == 5:
+			self.image = pygame.image.load("bg4.png")
+		if num == 6:
+			self.image = pygame.image.load("bg5.png")
+		if num == 7:
+			self.image = pygame.image.load("bg6.png")
+		
+
+
+
+
 
