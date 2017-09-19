@@ -18,7 +18,7 @@ class Player(Sprite):
 		self.should_move_down = False
 		self.should_move_left = False
 		self.should_move_right = False
-		self.rect = self.image.get_rect()
+		# self.rect = self.image.get_rect()
 
 	# 2. The methods where you define all the class functions (methods)
 

@@ -32,7 +32,7 @@ class Bad_guy2(Sprite):
 		self.x = randint(20,1150)
 		self.y = 50
 		self.speed += .5
-		num = randint(1,7)
+		num = randint(1,4)
 		if num == 1:
 			self.image = pygame.image.load("monster.png")
 		if num == 2:

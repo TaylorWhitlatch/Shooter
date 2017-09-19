@@ -4,7 +4,7 @@
 # it is NOT part of core. This is a 3rd party module.
 import pygame
 from pygame.sprite import Group, groupcollide, spritecollide, spritecollideany
-
+from pygame.sprite import Sprite
 import math
 # -----CUSTOM CLASSES HERE-----
 from Player import Player
@@ -13,6 +13,9 @@ from Bullet import Bullet
 from monster1 import Monster
 from bad_guy2 import Bad_guy2
 from bad_guy3 import Bad_guy3
+from bg4 import Bg4
+from bg5 import Bg5
+from bg6 import Bg6
 background = pygame.image.load('background2.png')
 
 # Have to init the pygame object so we can use it
@@ -34,12 +37,9 @@ bad_guy = Bad_guy(screen)
 bad_guy2 =Bad_guy2(screen)
 monster = Monster(screen)
 bad_guy3 =Bad_guy3(screen)
-# make a group for the bad_guys
-# bad_guys = Group()
-# add our bad_guy to the bad_guys group
-# bad_guys.add(bad_guy)
-# bad_guys.add(bad_guy2)
-# bad_guys.add(bad_guy3)
+bg4 = Bg4(screen)
+bg5 = Bg5(screen)
+bg6 = Bg6(screen)
 bad_guy_g = Group()
 bad_guy_g.add(bad_guy)
 bad_guy2_g = Group()
@@ -48,49 +48,40 @@ bad_guy3_g = Group()
 bad_guy3_g.add(bad_guy3)
 monster_g = Group()
 monster_g.add(monster)
-player = Group()
-player.add(the_player)
-# bad_guys.add(monster)
-# Make a new Group called bullets. Group is a pygame "list"
-# the_player = Group()
+bg4_g = Group()
+bg4_g.add(bg4)
+bg5_g = Group()
+bg5_g.add(bg5)
+bg6_g = Group()
+bg6_g.add(bg6)
+
 bullets = Group()
 the_player_group = Group()
 the_player_group.add(the_player)
 bg = 0
 hit = 0
-# the_player_image = pygame.image.load('batman.png')
-# player = {
-# 	"x": 100,
-# 	"y": 100
-# }
+
 
 game_on = True
-# Set up the main game loop
-while game_on: #will run forever (until break)
-	# Loop through all the pygame events.
-	# This is pygames escape hatch. (Quit)
+
+while game_on: 
 	for event in pygame.event.get():
-		# print event
+		
 		if event.type == pygame.QUIT:
 			game_on = False
 		elif event.type == pygame.KEYDOWN:
 			print event.key
-			# print "User pressed a key!!!"
+			
 			if event.key == 273:
-				# user pressed up!
-				# the_player.y -= the_player.speed
+				
 				the_player.should_move("up",True)
 				
 			elif event.key == 274:
-				# the_player.y += the_player.speed
+				
 				the_player.should_move("down",True)
-			if event.key == 275:
-				# the_player.x += the_player.speed
-				# the_player = Player('batman_r.png',100,100,screen)
+			if event.key == 275:	
 				the_player.should_move("right",True)
 			elif event.key == 276:
-				# the_player.x -= the_player.speed
-				# the_player = Player('batman_l.png',100,100,screen)
 				the_player.should_move("left",True)
 				
 
@@ -119,58 +110,59 @@ while game_on: #will run forever (until break)
 				the_player.should_move("left",False)
 				
 
-	# print bullets
-
-	# paint the screen
-	# screen.fill(background_color)
+	
 	pygame_screen.blit(background,[0,0])
 	for bad_guy2 in bad_guy2_g:
-	
-		# update the bad guy (based on where the player is)
-			bad_guy2.update_me(the_player)
-		# draw the bad guy
-			bad_guy2.draw_me()
+		bad_guy2.update_me(the_player)
+		bad_guy2.draw_me()
 	for bad_guy in bad_guy_g:
-		# update the bad guy (based on where the player is)
 		bad_guy.update_me(the_player)
-		# draw the bad guy
 		bad_guy.draw_me()
 
 	for bad_guy3 in bad_guy3_g:
-		# update the bad guy (based on where the player is)
 		bad_guy3.update_me(the_player)
-		# draw the bad guy
 		bad_guy3.draw_me()
 
+	if hit > 7:
+		for bg4 in bg4_g:
+			bg4.update_me(the_player) 
+			bg4.draw_me()
+
+	if hit > 15:
+		for bg5 in bg5_g:
+			bg5.update_me(the_player) 
+			bg5.draw_me()
+
+	if hit > 25:
+		for bg6 in bg6_g:
+			bg6.update_me(the_player) 
+			bg6.draw_me()
 	
 	
 
 	for monster in monster_g:
-		# update the bad guy (based on where the player is)
 		monster.update_me(the_player)
-		# draw the bad guy
 		monster.draw_me()
 
-	# # Must be after fill, or we won't be able to see the hero
-	# screen.blit(the_player.image, [the_player.x,the_player.y])
 	the_player.draw_me()
 
 	for bullet in bullets:
-		# update teh bullet location
 		bullet.update()
-		# draw the bullet on the screen
 		bullet.draw_bullet()
 
-	# Check for collions...
+
 	
 	bullet_hit = groupcollide(bullets,bad_guy2_g,True,True)
 	bullet_hit = groupcollide(bullets,bad_guy_g,True,True)
 	bullet_hit = groupcollide(bullets,bad_guy3_g,True,True)
 	bullet_hit = groupcollide(bullets,monster_g,True,True)
-	enemy_hit = groupcollide(player,bad_guy_g,True, True)
-	# print the_player_group
-	# print bad_guy2_g
-	print player
+	bullet_hit = groupcollide(bullets,bg4_g,True,True)
+	bullet_hit = groupcollide(bullets,bg5_g,True,True)
+	bullet_hit = groupcollide(bullets,bg6_g,True,True)
+	# enemy_hit = groupcollide(the_player_group,monster_g, True, True)
+	print the_player_group
+	print bad_guy_g
+	# print player
 	print monster_g
 	
 	if len(bad_guy_g) == 0:
@@ -193,7 +185,25 @@ while game_on: #will run forever (until break)
 		# bad_guy.reset
 		# bad_guys.add(bad_guy)
 		hit += 1
+	if len(bg4_g) == 0:
+		bg4.reset()
+		bg4_g.add(bg4)
+		# bad_guy.reset
+		# bad_guys.add(bad_guy)
+		hit += 1
+	if len(bg5_g) == 0:
+		bg5.reset()
+		bg5_g.add(bg5)
+		# bad_guy.reset
+		# bad_guys.add(bad_guy)
+		hit += 1
 
+	if len(bg6_g) == 0:
+		bg6.reset()
+		bg6_g.add(bg6)
+		# bad_guy.reset
+		# bad_guys.add(bad_guy)
+		hit += 1
 	# if bullet_hit == True:
 	# 	bad_guys.add(bad_guy)
 
@@ -201,10 +211,14 @@ while game_on: #will run forever (until break)
 
 	# print bullet_hit
 
-	# flip the screen, i.e.clear it so we can draw again... and again... and again
+	
 	font = pygame.font.Font(None, 32)
 	wins_text = font.render("Hits: %d" % (hit), True, (0,0,0))
 	pygame_screen.blit(wins_text,[40,40])
+	# font2 = pygame.font.Font(None, 64)
+	# boss_text = font2.render("BOSS", True, (0,0,0))
+	# if hit > 25:
+	# 	pygame_screen.blit(boss_text,[1050,40])
 	print hit
 	pygame.display.flip()
 

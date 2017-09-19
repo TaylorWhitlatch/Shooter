@@ -2,12 +2,11 @@ import pygame
 from pygame.sprite import Sprite
 from math import hypot
 from random import randint
-
-class Monster(Sprite):
+class Bg5(Sprite):
 	def __init__(self,screen):
-		super(Monster,self).__init__()
-		self.image = pygame.image.load('monster.png')
-		self.x = randint(20,200)
+		super(Bg5,self).__init__()
+		self.image = pygame.image.load('bg5.png')
+		self.x = randint(201,400)
 		self.y = 50
 		self.screen = screen
 		self.speed = 1
@@ -31,10 +30,10 @@ class Monster(Sprite):
 
 
 	def reset(self):
-		self.x = randint(20,1050)
+		self.x = randint(20,1150)
 		self.y = 50
 		self.speed += .5
-		num = randint(1,4)
+		num = randint(1,7)
 		if num == 1:
 			self.image = pygame.image.load("monster.png")
 		if num == 2:
@@ -50,3 +49,8 @@ class Monster(Sprite):
 		if num == 7:
 			self.image = pygame.image.load("bg6.png")
 		
+
+
+
+
+
