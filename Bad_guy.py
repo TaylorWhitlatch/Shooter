@@ -9,7 +9,7 @@ class Bad_guy(Sprite):
 		self.x = randint(201,400)
 		self.y = 50
 		self.screen = screen
-		self.speed = 1
+		self.speed = 5
 		self.rect = self.image.get_rect()
 
 	def update_me(self, the_player):

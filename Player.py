@@ -7,6 +7,7 @@ class Player(Sprite):
 	# Init, only runs once. When the object is instantiated
 	# Because this is a subclass, we need to call the parent's (Sprite) __init__
 	def __init__(self,image,start_x,start_y,screen):
+		
 		super(Player,self).__init__()
 		self.image = pygame.image.load(image)
 		self.image = pygame.transform.scale(self.image,(125,125))
@@ -18,7 +19,7 @@ class Player(Sprite):
 		self.should_move_down = False
 		self.should_move_left = False
 		self.should_move_right = False
-		# self.rect = self.image.get_rect()
+		self.rect = self.image.get_rect()
 
 	# 2. The methods where you define all the class functions (methods)
 
@@ -42,7 +43,9 @@ class Player(Sprite):
 				self.x += self.speed
 				self.image = pygame.image.load("batman_l.png")
 		self.screen.blit(self.image, [self.x,self.y])
-
+		self.rect.top = self.y
+		self.rect.left = self.x
+	
 	def should_move(self,direction,yes_or_no):
 		if(direction == "up"):
 			# the up key is down. update self.

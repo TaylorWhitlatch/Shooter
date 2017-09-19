@@ -6,6 +6,7 @@ import pygame
 from pygame.sprite import Group, groupcollide, spritecollide, spritecollideany
 from pygame.sprite import Sprite
 import math
+
 # -----CUSTOM CLASSES HERE-----
 from Player import Player
 from Bad_guy import Bad_guy
@@ -16,7 +17,10 @@ from bad_guy3 import Bad_guy3
 from bg4 import Bg4
 from bg5 import Bg5
 from bg6 import Bg6
+# image_direct = "/Users/taylorwhitlatch/Desktop/Shooter_Game/images/*.png" 
 background = pygame.image.load('background2.png')
+game_menu = pygame.image.load('monster.png')
+gamemenu = pygame.image.load('gamemenu.jpg')
 
 # Have to init the pygame object so we can use it
 pygame.init()
@@ -61,10 +65,14 @@ the_player_group.add(the_player)
 bg = 0
 hit = 0
 
-
+temp = 1
+change = 0
 game_on = True
+screen_on = 1
+if screen_on == 1:
 
 while game_on: 
+	
 	for event in pygame.event.get():
 		
 		if event.type == pygame.QUIT:
@@ -83,6 +91,8 @@ while game_on:
 				the_player.should_move("right",True)
 			elif event.key == 276:
 				the_player.should_move("left",True)
+			if event.key == 13:
+				change += 1
 				
 
 			# elif event.key == 115:
@@ -110,7 +120,9 @@ while game_on:
 				the_player.should_move("left",False)
 				
 
-	
+	# if change == 0:
+	# 	pygame_screen.blit(game_menu,[0,0])
+	# elif change == 1:
 	pygame_screen.blit(background,[0,0])
 	for bad_guy2 in bad_guy2_g:
 		bad_guy2.update_me(the_player)
@@ -138,13 +150,15 @@ while game_on:
 			bg6.update_me(the_player) 
 			bg6.draw_me()
 	
-	
+
+	for the_player in the_player_group:
+
+		the_player.draw_me()
 
 	for monster in monster_g:
 		monster.update_me(the_player)
 		monster.draw_me()
 
-	the_player.draw_me()
 
 	for bullet in bullets:
 		bullet.update()
@@ -159,11 +173,17 @@ while game_on:
 	bullet_hit = groupcollide(bullets,bg4_g,True,True)
 	bullet_hit = groupcollide(bullets,bg5_g,True,True)
 	bullet_hit = groupcollide(bullets,bg6_g,True,True)
-	# enemy_hit = groupcollide(the_player_group,monster_g, True, True)
+	enemy_hit = groupcollide(the_player_group,bad_guy_g,False, True)
+
+	# for ehit in enemy_hit:
+	# 	the_player.image = pygame.image.load("/Users/taylorwhitlatch/Desktop/Shooter_Game/images/*.png")
+
+
+	
 	print the_player_group
-	print bad_guy_g
-	# print player
-	print monster_g
+	# print bad_guy_g
+	# # print player
+	# print monster_g
 	
 	if len(bad_guy_g) == 0:
 		bad_guy.reset()
@@ -188,6 +208,7 @@ while game_on:
 	if len(bg4_g) == 0:
 		bg4.reset()
 		bg4_g.add(bg4)
+	# 	bg4_g.add(bg4)
 		# bad_guy.reset
 		# bad_guys.add(bad_guy)
 		hit += 1
@@ -204,6 +225,8 @@ while game_on:
 		# bad_guy.reset
 		# bad_guys.add(bad_guy)
 		hit += 1
+		
+
 	# if bullet_hit == True:
 	# 	bad_guys.add(bad_guy)
 
@@ -219,6 +242,6 @@ while game_on:
 	# boss_text = font2.render("BOSS", True, (0,0,0))
 	# if hit > 25:
 	# 	pygame_screen.blit(boss_text,[1050,40])
-	print hit
+	# print hit
 	pygame.display.flip()
 

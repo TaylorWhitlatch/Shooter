@@ -9,8 +9,8 @@ class Bg6(Sprite):
 		self.x = randint(201,400)
 		self.y = 50
 		self.screen = screen
-		self.speed = 3
-		self.rect = self.image.get_rect()
+		self.speed = 1       
+   		self.rect = self.image.get_rect()
 
 	def update_me(self, the_player):
 		dx = self.x - the_player.x
