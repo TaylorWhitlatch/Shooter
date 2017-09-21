@@ -17,7 +17,7 @@ from bad_guy3 import Bad_guy3
 from bg4 import Bg4
 from bg5 import Bg5
 from bg6 import Bg6
-# image_direct = "/Users/taylorwhitlatch/Desktop/Shooter_Game/images/*.png" 
+image_direct = "/Users/taylorwhitlatch/Desktop/Shooter_Game/images/{}.png" 
 background = pygame.image.load('background2.png')
 game_menu = pygame.image.load('monster.png')
 gamemenu = pygame.image.load('gamemenu.jpg')
@@ -68,8 +68,8 @@ hit = 0
 temp = 1
 change = 0
 game_on = True
-screen_on = 1
-if screen_on == 1:
+screen_on = True
+
 
 while game_on: 
 	
@@ -167,6 +167,8 @@ while game_on:
 
 	
 	bullet_hit = groupcollide(bullets,bad_guy2_g,True,True)
+	for ehit in bullet_hit:
+		hit += 1
 	bullet_hit = groupcollide(bullets,bad_guy_g,True,True)
 	bullet_hit = groupcollide(bullets,bad_guy3_g,True,True)
 	bullet_hit = groupcollide(bullets,monster_g,True,True)
@@ -174,9 +176,36 @@ while game_on:
 	bullet_hit = groupcollide(bullets,bg5_g,True,True)
 	bullet_hit = groupcollide(bullets,bg6_g,True,True)
 	enemy_hit = groupcollide(the_player_group,bad_guy_g,False, True)
+	for ehit in enemy_hit:
+		the_player.image = pygame.image.load("dead.png")
+		font2 = pygame.font.Font(None, 256)
+		g_over = font2.render("Game Over", True, (0,0,0))
+		pygame_screen.blit(g_over,[100,300])
+		game_on = False
 
-	# for ehit in enemy_hit:
-	# 	the_player.image = pygame.image.load("/Users/taylorwhitlatch/Desktop/Shooter_Game/images/*.png")
+		
+	enemy_hit = groupcollide(the_player_group,bad_guy2_g,False, True)
+	for ehit in enemy_hit:
+		the_player.image = pygame.image.load("dead.png") 
+		break
+	enemy_hit = groupcollide(the_player_group,bad_guy3_g,False, True)
+	for ehit in enemy_hit:
+		the_player.image = pygame.image.load("dead.png") 
+		break
+	enemy_hit = groupcollide(the_player_group,bg4_g,False, True)
+	for ehit in enemy_hit:
+		the_player.image = pygame.image.load("dead.png") 
+		break
+	enemy_hit = groupcollide(the_player_group,bg5_g,False, True)
+	for ehit in enemy_hit:
+		the_player.image = pygame.image.load("dead.png") 
+		break
+	enemy_hit = groupcollide(the_player_group,bg6_g,False, True)
+	for ehit in enemy_hit:
+		the_player.image = pygame.image.load("dead.png") 
+		break;
+ 
+		 
 
 
 	

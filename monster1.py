@@ -24,6 +24,7 @@ class Monster(Sprite):
 		self.rect.left = self.x
 		self.rect.top = self.y
 
+
 	def draw_me(self):
 		# self.rect.left = self.x
 		# self.rect.top = self.y
@@ -49,4 +50,3 @@ class Monster(Sprite):
 			self.image = pygame.image.load("bg5.png")
 		if num == 7:
 			self.image = pygame.image.load("bg6.png")
-		

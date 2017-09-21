@@ -3,17 +3,17 @@ from pygame.sprite import Sprite
 
 class Player(Sprite):
 	# Classes always contain 2 parts:
-	# 1. the __init__ section where you define all attributes. 
+	# 1. the __init__ section where you define all attributes.
 	# Init, only runs once. When the object is instantiated
 	# Because this is a subclass, we need to call the parent's (Sprite) __init__
 	def __init__(self,image,start_x,start_y,screen):
-		
+
 		super(Player,self).__init__()
 		self.image = pygame.image.load(image)
 		self.image = pygame.transform.scale(self.image,(125,125))
-		self.x = 400						
+		self.x = 400
 		self.y = 700
-		self.speed = 10
+		self.speed = 12
 		self.screen = screen
 		self.should_move_up = False
 		self.should_move_down = False
@@ -28,8 +28,8 @@ class Player(Sprite):
 			if self.y > 600:
 
 				self.y -= self.speed
-			
-				
+
+
 		elif(self.should_move_down):
 			if self.y < 700:
 				self.y += self.speed
@@ -45,7 +45,7 @@ class Player(Sprite):
 		self.screen.blit(self.image, [self.x,self.y])
 		self.rect.top = self.y
 		self.rect.left = self.x
-	
+
 	def should_move(self,direction,yes_or_no):
 		if(direction == "up"):
 			# the up key is down. update self.

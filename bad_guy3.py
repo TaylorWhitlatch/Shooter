@@ -13,7 +13,7 @@ class Bad_guy3(Sprite):
 		self.rect = self.image.get_rect()
 
 	def update_me(self, the_player):
-		dx = self.x - the_player.x
+		dx = self.x 
 		dy = self.y - the_player.y
 		dist = hypot(dx,dy)
 		dx = dx / dist
